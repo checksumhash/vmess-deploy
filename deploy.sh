@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Vmess Deploy
-# --------------------------------
-# author    : SonyaCore
-#	      https://github.com/SonyaCore
-#
-
 PORT=80
 UUID=$(cat /proc/sys/kernel/random/uuid)
 IP=$(hostname -I | cut -d' ' -f1)
@@ -33,14 +27,13 @@ cat > docker-compose.yaml <<DOCKER
 version: '3'
 services:
   v2ray:
-    image: v2fly/v2fly-core
+    image: v2fly/v2fly-core:v4.45.2
     restart: always
     network_mode: host
     environment:
       - V2RAY_VMESS_AEAD_FORCED=false
     volumes:
         - ./$CONFIGNAME:/etc/v2ray/config.json:ro
-    entrypoint: ["v2ray", "run", "-c", "/etc/v2ray/config.json"]
 DOCKER
 
 cat > $CONFIGNAME <<CONFIG
@@ -171,8 +164,3 @@ printf vmess://;echo \{\"add\":\"$IP\", \
 \"type\":\"none\", \
 \"v\":\"2\"\}|base64 -w0;echo
 
-echo ""
-echo "! After importing vmess link change the IP to your Internal Server IP"
-
-# Clean Up
-rm -rf deploy.sh
