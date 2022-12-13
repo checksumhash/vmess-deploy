@@ -153,7 +153,7 @@ echo ""
 
 # Vmess Link Generation
 printf vmess://;echo \{\"add\":\"$IP\", \
-\"aid\":\"0\", \
+\"aid\":\"40\", \
 \"host\":\"\", \
 \"id\":\"$UUID\", \
 \"net\":\"ws\", \
